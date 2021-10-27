@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <h1>{{title}}</h1>
+
+        <div v-for="(fc, index) in fComapany" :key="fc">
+            {{index}} {{fc}}
+        </div>
+
+        <div class="demo" v-if="condition==1">
+            <h1>This is Condional Statement</h1>
+        </div>
+        <div class="demo" v-else-if="condition==2">
+            <h1>This is Condional Statement From Else IF</h1>
+        </div>
+
+        <div class="demo" v-else>
+            <h1>This is Condional Statement From Else </h1>
+        </div>
+
+        {{fName}} - {{lName}}
+        <hr>
+        {{getLog}}
+
+        <br><br>
+        <hr>
+        <form @submit.prevent='submitForm'>
+            <center>
+                Name: <input type="text" v-model="form.name"> <br><br>
+                msg_subject: <input type="text" v-model="form.msg_subject"> <br><br>
+                message: <textarea name="" id="" cols="30" rows="10"  v-model="form.message"></textarea> <br><br>
+                phone_number: <input type="text"  v-model="form.phone_number"> <br><br>
+                email: <input type="text"  v-model="form.email"> <br><br>
+                <button type="submit">Click Here</button><br>
+            </center>
+        </form>
+
+
+
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.22.0/axios.min.js"
+        integrity="sha512-m2ssMAtdCEYGWXQ8hXVG4Q39uKYtbfaJL5QMTbhl2kc6vYyubrKHhr6aLLXW4ITeXSywQLn1AhsAaqrJl8Acfg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+
+        const Counter = {
+
+            data() {
+                return {
+                    title: '',
+                    fName: 'Anicur',
+                    lName: 'Rahaman',
+                    sonkha: '',
+                    fComapany: ['weDevs', 'bjit', 'Brain Staion', 'alesha tech'],
+                    condition: 2,
+                    form:{
+                        name:'',
+                        email:'',
+                        phone_number:'',
+                        msg_subject:'',
+                        message:'',
+                    }
+                }
+            },
+            computed: {
+                getLog() {
+                    let fullname = this.fName + this.lName;
+                    return fullname.length;
+                },
+                oifdjgvoifd() {
+
+                }
+            },
+
+            mounted() {
+                this.getNews();
+            },
+
+          
+            methods: {
+                getNews(id) {
+
+                    axios.get(`http://news.snmleathers.com/api/v1/news/view/2`).then((res) => {
+                        this.title = res.data.data.title;
+                        console.log('Hello From Method');
+                    });
+                },
+                submitForm(){
+                
+                    axios.post('http://news.snmleathers.com/api/v1/contact', this.form).then((res) => {
+                            console.log(res.data.Contact);
+                    })
+                }
+
+
+            }
+
+
+        }
+
+
+        Vue.createApp(Counter).mount('#app')
+    </script>
+</body>
+
+</html>
